@@ -34,6 +34,9 @@ public static boolean containsChar(char[] array, char target) {
         char guess = ' ';
         int numGuesses = 0;
         boolean matchFound = false;
+        //first round check
+
+        boolean round1 = false;
         //Welcome the user to the software
         //Prompt them to select a category
         do {
@@ -41,7 +44,9 @@ public static boolean containsChar(char[] array, char target) {
                     "Please select a topic. You can have two 1x use perks, a hint and a letter reveal \n" +
                     "1) General\n" +
                     "2) Lord of the Rings\n" +
-                    "3) StarTrek Voyager");
+                    "3) StarTrek Voyager\n" +
+                    "4. Avengers\n" +
+                    "5. Bible");
 //        String name = "Cai";
 //        System.out.println(name);
             String[][] general = {
@@ -69,16 +74,45 @@ public static boolean containsChar(char[] array, char target) {
                     {"neelix", "a friendly, optimistic Talaxian from the Delta Quadrant who serves as the ship's chef, morale officer, and guide."}
             };
 
-            System.out.print("\nAnswer: ");
+            String[][] avengers = {
+                    {"ironman", "a genius billionaire inventor who builds advanced armored suits and becomes one of the founding members of the Avengers."},
+                    {"captainamerica", "a super soldier and natural leader who fights for justice with his iconic vibranium shield."},
+                    {"thor", "the Asgardian God of Thunder who wields the enchanted hammer Mjolnir and later Stormbreaker."},
+                    {"hulk", "the powerful green alter ego of scientist Bruce Banner, known for his immense strength."},
+                    {"blackwidow", "a highly skilled spy and combat expert who serves as a key member of the Avengers."},
+                    {"hawkeye", "an expert marksman and archer whose precision and loyalty make him a valuable Avenger."}
+            };
 
-            byte choice = input.nextByte();
-            input.nextLine();
+            String[][] bible = {
+                    {"moses", "the prophet chosen by God to lead the Israelites out of slavery in Egypt and receive the Ten Commandments."},
+                    {"david", "the shepherd boy who defeated Goliath and later became one of Israel's greatest kings."},
+                    {"solomon", "the wise king of Israel who built the First Temple in Jerusalem."},
+                    {"abraham", "the patriarch whom God called to leave his homeland and who became the father of many nations."},
+                    {"noah", "the righteous man who built the ark and survived the great flood with his family and pairs of animals."},
+                    {"paul", "an apostle and missionary who spread Christianity throughout the Roman world and wrote many New Testament letters."}
+            };
+
+            System.out.print("\nAnswer: ");
+            byte choice;
+            do{
+                 choice = input.nextByte();
+                input.nextLine();
+                if(!round1 && choice>3){
+                    System.out.println("You cannot guess an Avenger or a Bible character unless you complete the game at least once");
+                    System.out.print("\nAnswer: ");
+
+                }
+            }while(!round1 && choice>3);
+
+
 
             System.out.println("");
             String[][] words = switch (choice) {
                 case 1 -> general;
                 case 2 -> lotr;
-                default -> trek;
+                case 3 -> trek;
+                case 4 -> avengers;
+                default -> bible;
             };
 //        String[] words;
 //        switch (choice){
@@ -92,8 +126,9 @@ public static boolean containsChar(char[] array, char target) {
 //                words = trek;
 //        }
             //Select a random word from that category
-            brokenDownWord = words[r.nextInt(words.length)][0].toCharArray();
-            hint = words[r.nextInt(words.length)][1];
+            int index = r.nextInt(words.length);
+            brokenDownWord = words[index][0].toCharArray();
+            hint = words[index][1];
             //r.nextInt(words.length)
             //words.length = 7
             //r.nextInt(7)-> 0-6
@@ -190,6 +225,8 @@ public static boolean containsChar(char[] array, char target) {
             System.out.println("Would you like to play the game again? Enter y or n");
             guess = input.nextLine().trim().toLowerCase().charAt(0);
             numGuesses = 0;
+
+            round1 = true;
             //System.out.println(5>3 ? "Five" : "three");
 
         }while (guess == 'y');

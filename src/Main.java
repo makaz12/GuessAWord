@@ -8,15 +8,6 @@ import java.util.Scanner;
  *
  */
 public class Main {
-//    public static char reveal(char[] hiddenWord){
-//        Random r = new Random();
-//        char reveal ;
-//        for(int i = 0; i< hiddenWord.length; i++) {
-//            reveal = hiddenWord[r.nextInt(((hiddenWord.length - 1)) + 1)];
-//        }
-//
-//        return reveal;
-//    }
 public static boolean containsChar(char[] array, char target) {
     for (char c : array) {
         if (c == target) {
@@ -34,9 +25,9 @@ public static boolean containsChar(char[] array, char target) {
         char guess = ' ';
         int numGuesses = 0;
         boolean matchFound = false;
-        //first round check
-
         boolean round1 = false;
+        int roundCount = 0;
+        int[] track;
         //Welcome the user to the software
         //Prompt them to select a category
         do {
@@ -46,7 +37,9 @@ public static boolean containsChar(char[] array, char target) {
                     "2) Lord of the Rings\n" +
                     "3) StarTrek Voyager\n" +
                     "4. Avengers\n" +
-                    "5. Bible");
+                    "5. Bible" +
+                    "6. DC comics" +
+                    "7. Brooklyn 9-9");
 //        String name = "Cai";
 //        System.out.println(name);
             String[][] general = {
@@ -92,6 +85,26 @@ public static boolean containsChar(char[] array, char target) {
                     {"paul", "an apostle and missionary who spread Christianity throughout the Roman world and wrote many New Testament letters."}
             };
 
+            String[][] dcComics = {
+                    {"batman", "the wealthy Bruce Wayne who fights crime in Gotham City using his intelligence, training, and advanced technology."},
+                    {"superman", "the Kryptonian hero Clark Kent who possesses incredible strength, flight, and other extraordinary powers."},
+                    {"wonderwoman", "the Amazonian warrior princess Diana who champions peace, justice, and equality."},
+                    {"flash", "the fastest man alive who can move at superhuman speeds by accessing the Speed Force."},
+                    {"aquaman", "the king of Atlantis who can communicate with marine life and protect both the oceans and the surface world."},
+                    {"cyborg", "a superhero enhanced with advanced cybernetic technology who serves as both a human and a machine."}
+            };
+
+            String[][] brooklyn99 = {
+                    {"jake", "a talented but immature detective of the 99th precinct known for his humour and love of solving cases."},
+                    {"amy", "an ambitious and highly organised detective who constantly strives to become the best officer possible."},
+                    {"holt", "the serious and respected captain of the 99th precinct who serves as a mentor to his detectives."},
+                    {"rosa", "a tough and private detective whose intimidating personality hides a loyal and caring side."},
+                    {"terry", "a strong and dedicated sergeant who balances police work with his devotion to his family."},
+                    {"gina", "the precinct's confident and eccentric civilian administrator known for her unique outlook on life."}
+            };
+
+
+
             System.out.print("\nAnswer: ");
             byte choice;
             do{
@@ -112,31 +125,16 @@ public static boolean containsChar(char[] array, char target) {
                 case 2 -> lotr;
                 case 3 -> trek;
                 case 4 -> avengers;
-                default -> bible;
+                case 5 -> bible;
+                case 6 -> dcComics;
+                default -> brooklyn99;
             };
-//        String[] words;
-//        switch (choice){
-//            case 1:
-//                words = general;
-//            break;
-//            case 2:
-//                words = lotr;
-//            break;
-//            default:
-//                words = trek;
-//        }
+
             //Select a random word from that category
             int index = r.nextInt(words.length);
             brokenDownWord = words[index][0].toCharArray();
             hint = words[index][1];
-            //r.nextInt(words.length)
-            //words.length = 7
-            //r.nextInt(7)-> 0-6
-            //words[0] -> "frodo"
-            //"frodo".toCharArray() -> ['f']['r']['o']['d']['o']
-            //brokenDownWord =  ['f']['r']['o']['d']['o']
-            //Break that word down into a character array
-            //Build a hidden word array that matches the character array
+
             hiddenWord = new char[brokenDownWord.length]; // ['']['']['']['']['']
             Arrays.fill(hiddenWord, '*'); //['*']['*']['*']['*']['*']
 
@@ -192,11 +190,6 @@ public static boolean containsChar(char[] array, char target) {
 //
                 else{
 
-                    // "                    BoBy              "
-                    // "BoBy"
-                    // "BoBy" -> "boby"
-                    // "boby" -> 'b'
-
                     //assign guessed letter to hiddenWord array
                         for (int i = 0; i < brokenDownWord.length; i++) {
                             if (brokenDownWord[i] == guess) {
@@ -211,13 +204,15 @@ public static boolean containsChar(char[] array, char target) {
                         System.out.println(guess + " was "
                                 + (matchFound ? "found" : "not found")
                                 + " in the word");
-                        // condition ? true : false
-                        // 5 > 4 ?
 
                     //reset matchFound after every guess
                         matchFound = false;
                 }
             } while (!Arrays.equals(brokenDownWord, hiddenWord));
+
+            //count round
+            roundCount++;
+            System.out.println(roundCount);
 
             //Final message of completed round and total guesses
             System.out.println("The word is " + new String(hiddenWord) + "." +
@@ -225,7 +220,6 @@ public static boolean containsChar(char[] array, char target) {
             System.out.println("Would you like to play the game again? Enter y or n");
             guess = input.nextLine().trim().toLowerCase().charAt(0);
             numGuesses = 0;
-
             round1 = true;
             //System.out.println(5>3 ? "Five" : "three");
 

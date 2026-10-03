@@ -27,10 +27,19 @@ public static boolean containsChar(char[] array, char target) {
         boolean matchFound = false;
         boolean round1 = false;
         int roundCount = 0;
-        int[] track;
+        int[] score = new int[0];
         //Welcome the user to the software
         //Prompt them to select a category
         do {
+            roundCount++;
+            int[] track = new int[score.length +1];
+            for(int i = 0; i<score.length; i++){
+                track[i] = score[i];
+                System.out.print("array content: "+track[i]);
+            }
+
+
+
             System.out.println("Welcome to the Guess a word game\n" +
                     "Please select a topic. You can have two 1x use perks, a hint and a letter reveal \n" +
                     "1) General\n" +
@@ -210,10 +219,13 @@ public static boolean containsChar(char[] array, char target) {
                 }
             } while (!Arrays.equals(brokenDownWord, hiddenWord));
 
-            //count round
-            roundCount++;
-            System.out.println(roundCount);
+//            track = new int[1];
+//            track[0] = numGuesses;
+//            System.out.println(track[0]);
 
+            track[track.length - 1] = numGuesses;
+            score = track;
+//
             //Final message of completed round and total guesses
             System.out.println("The word is " + new String(hiddenWord) + "." +
                     "You missed " + numGuesses + " time(s)");
@@ -222,8 +234,9 @@ public static boolean containsChar(char[] array, char target) {
             numGuesses = 0;
             round1 = true;
             //System.out.println(5>3 ? "Five" : "three");
-
         }while (guess == 'y');
+
+
 
 
         //play the game

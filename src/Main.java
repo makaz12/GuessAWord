@@ -46,9 +46,9 @@ public static boolean containsChar(char[] array, char target) {
                     "2) Lord of the Rings\n" +
                     "3) StarTrek Voyager\n" +
                     "4. Avengers\n" +
-                    "5. Bible" +
-                    "6. DC comics" +
-                    "7. Brooklyn 9-9");
+                    "5. Bible\n" +
+                    "6. DC comics\n" +
+                    "7. Brooklyn 9-9\n");
 //        String name = "Cai";
 //        System.out.println(name);
             String[][] general = {
@@ -236,8 +236,12 @@ public static boolean containsChar(char[] array, char target) {
             //System.out.println(5>3 ? "Five" : "three");
         }while (guess == 'y');
 
+        String scoreBoard = new String("Score Board: ");
+        System.out.print(scoreBoard);
+        for(int i = 0; i<score.length; i++){
 
-
+            System.out.println("\t\t" + score[i]);
+        }
 
         //play the game
         input.close();
